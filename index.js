@@ -7,7 +7,8 @@ board.on('ready', () => {
   const thermometer = new Thermometer({
     controller: 'DHT11_I2C_NANO_BACKPACK',
   });
-
+  console.log(thermometer);
+  console.log('yes we got here');
   thermometer.on('change', () => {
     const { celsius, fahrenheit, kelvin } = thermometer;
     console.log('Thermometer');
