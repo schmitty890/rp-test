@@ -1,12 +1,28 @@
 console.log('the test works!');
 
-var sensor = require('node-dht-sensor');
+// var sensor = require('node-dht-sensor');
 
-sensor.read(11, 4, function (err, temperature, humidity) {
-  if (!err) {
-    console.log(`temp: ${temperature}°C, humidity: ${humidity}%`);
+// sensor.read(11, 4, function (err, temperature, humidity) {
+//   if (!err) {
+//     console.log(`temp: ${temperature}°C, humidity: ${humidity}%`);
+//   }
+// });
+
+const sensor = require('node-dht-sensor').promises;
+
+async function exec() {
+  try {
+    const res = await sensor.read(11, 4);
+    console.log(
+      `temp: ${res.temperature.toFixed(1)}°C, ` +
+        `humidity: ${res.humidity.toFixed(1)}%`
+    );
+  } catch (err) {
+    console.error('Failed to read sensor data:', err);
   }
-});
+}
+
+exec();
 
 // const { Board, Thermometer } = require('johnny-five');
 // const board = new Board();
