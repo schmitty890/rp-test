@@ -1,22 +1,19 @@
 console.log('the test works!');
 
-var five = require('johnny-five');
-var board = new five.Board();
+const { Board, Thermometer } = require('johnny-five');
+const board = new Board();
 
-board.on('ready', function () {
-  var multi = new five.Multi({
+board.on('ready', () => {
+  const thermometer = new Thermometer({
     controller: 'DHT11_I2C_NANO_BACKPACK',
   });
 
-  multi.on('change', function () {
+  thermometer.on('change', () => {
+    const { celsius, fahrenheit, kelvin } = thermometer;
     console.log('Thermometer');
-    console.log('  celsius           : ', this.thermometer.celsius);
-    console.log('  fahrenheit        : ', this.thermometer.fahrenheit);
-    console.log('  kelvin            : ', this.thermometer.kelvin);
-    console.log('--------------------------------------');
-
-    console.log('Hygrometer');
-    console.log('  relative humidity : ', this.hygrometer.relativeHumidity);
+    console.log('  celsius      : ', celsius);
+    console.log('  fahrenheit   : ', fahrenheit);
+    console.log('  kelvin       : ', kelvin);
     console.log('--------------------------------------');
   });
 });
