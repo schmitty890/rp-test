@@ -14,7 +14,8 @@ console.log('the test works!');
 // });
 
 const sensor = require('node-dht-sensor').promises;
-
+sensor.setMaxRetries(10);
+sensor.initialize(11, 4);
 async function exec() {
   try {
     const res = await sensor.read(11, 4);
