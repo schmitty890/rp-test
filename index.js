@@ -8,21 +8,36 @@ console.log('the test works!');
 //   }
 // });
 
-const sensor = require('node-dht-sensor').promises;
+const sensor = require('node-dht-sensor');
 
-async function exec() {
-  try {
-    const res = await sensor.read(11, 4);
-    console.log(
-      `temp: ${res.temperature.toFixed(1)}°C, ` +
-        `humidity: ${res.humidity.toFixed(1)}%`
-    );
-  } catch (err) {
-    console.error('Failed to read sensor data:', err);
-  }
-}
+const sensorType = 11; // DHT11
+const gpioPin = 4; // GPIO pin connected to the sensor
 
-exec();
+setInterval(() => {
+  sensor.read(sensorType, gpioPin, (err, temperature, humidity) => {
+    if (!err) {
+      console.log(`Temperature: ${temperature}°C, Humidity: ${humidity}%`);
+    } else {
+      console.error(err);
+    }
+  });
+}, 2000); // Read sensor data every 2 seconds
+
+// const sensor = require('node-dht-sensor').promises;
+
+// async function exec() {
+//   try {
+//     const res = await sensor.read(11, 4);
+//     console.log(
+//       `temp: ${res.temperature.toFixed(1)}°C, ` +
+//         `humidity: ${res.humidity.toFixed(1)}%`
+//     );
+//   } catch (err) {
+//     console.error('Failed to read sensor data:', err);
+//   }
+// }
+
+// exec();
 
 // const { Board, Thermometer } = require('johnny-five');
 // const board = new Board();
